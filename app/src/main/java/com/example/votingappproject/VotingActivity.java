@@ -2,6 +2,7 @@ package com.example.votingappproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 public class VotingActivity extends AppCompatActivity {
 
         TextView Votes1, Votes2, Votes3, Votes4;
-        Button Button1, Button2, Button3, Button4;
+        Button Button1, Button2, Button3, Button4, AddTopicBtn;
         int count1, count2, count3, count4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,8 @@ public class VotingActivity extends AppCompatActivity {
         Button2 = (Button) findViewById(R.id.VoteButton2);
         Button3 = (Button) findViewById(R.id.VoteButton3);
         Button4 = (Button) findViewById(R.id.VoteButton4);
+
+        AddTopicBtn = findViewById(R.id.btnDisplay);
 
         Button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +56,15 @@ public class VotingActivity extends AppCompatActivity {
             public void onClick(View view) {
                 count4++;
                 Votes4.setText(String.valueOf(count4));
+            }
+        });
+
+        AddTopicBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Start the VotingActivity
+                Intent intent = new Intent(VotingActivity.this, AddTopic.class);
+                startActivity(intent);
             }
         });
     }

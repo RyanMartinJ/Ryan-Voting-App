@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
     private EditText textUser;
@@ -18,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         textUser =(EditText) findViewById(R.id.userName);
         textPw = (EditText) findViewById(R.id.password);
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
                 if (un.equals(textUser.getText().toString()) && pw.equals(textPw.getText().toString())){
 
                     Toast.makeText(MainActivity.this,"Login Successful",Toast.LENGTH_SHORT).show();
+
+                    // Start the VotingActivity
+                    Intent intent = new Intent(MainActivity.this, VotingActivity.class);
+                    startActivity(intent);
                 }
                 else {
                     Toast.makeText(MainActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
