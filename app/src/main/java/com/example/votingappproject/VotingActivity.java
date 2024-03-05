@@ -7,6 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import androidx.appcompat.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.content.DialogInterface;
+import android.widget.LinearLayout;
 
 public class VotingActivity extends AppCompatActivity {
 
@@ -59,13 +65,57 @@ public class VotingActivity extends AppCompatActivity {
             }
         });
 
+//        AddTopicBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Start the VotingActivity
+//                Intent intent = new Intent(VotingActivity.this, AddTopic.class);
+//                startActivity(intent);
+//            }
+//        });
+
         AddTopicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Start the VotingActivity
-                Intent intent = new Intent(VotingActivity.this, AddTopic.class);
-                startActivity(intent);
+                // Obtain the LayoutInflater
+                LayoutInflater inflater = LayoutInflater.from(VotingActivity.this);
+
+                // Inflate the custom layout for the AlertDialog
+                View dialogView = inflater.inflate(R.layout.popup_add_topic, null);
+
+                // Now you can use dialogView to find the EditText or any other views in your custom layout
+                final EditText input = (EditText) dialogView.findViewById(R.id.editTextNewOption);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(VotingActivity.this);
+                builder.setView(dialogView)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String newOption = input.getText().toString();
+                                // Handle the new option here
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
             }
         });
+    }
+
+    public void addNewVotingOption(String optionName) {
+        LinearLayout optionsLayout = findViewById(R.id.optionsLayout); // Assuming you have this LinearLayout in your XML
+
+        TextView newOptionView = new TextView(VotingActivity.this);
+        newOptionView.setText(optionName);
+        // You might want to style this TextView or add buttons for voting dynamically as well
+        // Consider storing vote counts in a more dynamic structure like a Map if you haven't
+
+        optionsLayout.addView(newOptionView);
+        // Here, you would also need to handle the logic for voting on this new option
     }
 }
